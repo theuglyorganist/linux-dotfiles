@@ -1,0 +1,56 @@
+if [ -f /usr/bin/apt ]; then
+	PM="apt"
+elif [ -f /usr/bin/dnf ]; then
+        PM="dnf"
+elif [ -f /usr/bin/pacman ]; then
+        PM="pacman"
+else
+	echo "Nenhum gerenciador encontrado"
+fi
+
+if [ "$PM" = "apt" ]; then
+	while read package
+	do
+		echo "Instalando $package..."
+		sudo apt install -y "$package"
+	done < packages-linux-must
+	sudo apt install -y virtualbox
+	sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+	sudo curl -fsSLo /etc/apt/sources.list.d/brave-browser-release.sources https://brave-browser-apt-release.s3.brave.com/brave-browser.sources
+	sudo apt update
+	sudo apt install brave-origin
+
+elif [ "$PM" = "pacman" ]; then
+	while read package
+	do
+		echo "Instalando $package..."
+		sudo pacman -S --noconfirm "$package"
+	done < packages-linux-must
+	sudo pacman -S --noconfirm virtualbox
+	git clone https://aur.archlinux.org/yay-bin.git
+	cd yay-bin
+	sudo pacman -S base-devel
+	makepkg -si
+	yay -Sy brave-origin-bin
+
+elif [ "$PM" = "dnf" ]; then
+	while read package
+	do
+		echo "Instalando $package..."
+	done < packages-linux-must
+	sudo dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+	sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+	sudo dnf install brave-origin
+fi
+
+while read flatpak
+do
+	echo "Instalando $flatpak..."
+	flatpak install -y flathub "$flatpak"
+done < packages-linux-flatpak
+
+echo "Configurando terminal"...
+dconf load /org/gnome/terminal/ < gnome-terminal.dconf
+
+
+	
