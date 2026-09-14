@@ -52,5 +52,5 @@ done < packages-linux-flatpak
 echo "Configurando terminal"...
 dconf load /org/gnome/terminal/ < gnome-terminal.dconf
 
-
-	
+echo "Configurando neofetch..."
+./neofetch/neofetch-conf

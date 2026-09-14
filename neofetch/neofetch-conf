@@ -1,0 +1,4 @@
+#!/bin/bash
+rm -f ~/.config/neofetch/config.conf
+cp ./config.conf ~/.config/neofetch/
+cp ./mimikyu ~/.config/neofetch/
