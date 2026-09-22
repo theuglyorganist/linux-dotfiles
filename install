@@ -58,3 +58,6 @@ echo "Configurando neofetch..."
 ./neofetch/neofetch-conf
 
 sudo cp ./update /usr/local/bin/
+
+echo "Instalando Zerotier-One..."
+curl -s https://install.zerotier.com | sudo bash
