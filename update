@@ -1,3 +1,9 @@
 #!/usr/bin/bash
-apt update -y
-apt upgrade -y
+if [ -f /usr/bin/apt ]; then
+    sudo apt update -y && sudo apt upgrade -y
+elif [ -f /usr/bin/dnf ]; then
+    sudo dnf upgrade -y
+elif [ -f /usr/bin/pacman ]; then
+    sudo pacman -Syu --noconfirm
+fi
+

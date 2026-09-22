@@ -56,3 +56,5 @@ dconf load /org/gnome/terminal/ < gnome-terminal.dconf
 
 echo "Configurando neofetch..."
 ./neofetch/neofetch-conf
+
+sudo cp ./update /usr/local/bin/
