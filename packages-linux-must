@@ -2,7 +2,6 @@ btop
 openssh-server
 openssh-client
 nmap
-zerotier-one
 git
 python3
 nodejs
